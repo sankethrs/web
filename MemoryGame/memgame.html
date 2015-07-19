@@ -1,0 +1,271 @@
+<html>
+<head>
+<script type="text/javascript">
+
+
+function displayt()
+{	
+	document.getElementById("front").style.display="none";
+	document.getElementById("divPlay").style.display="block";
+	document.getElementById("mainmenu").style.display="block";
+	document.getElementById("instblock").style.display="none";
+	document.getElementById("settingbut").style.display="none";
+	changeBorder();		
+}
+
+function changeBorder()
+{
+	document.getElementById('myTable').border="5";
+	document.getElementById('myTable').width="50%";
+}
+
+
+var my=new Array();
+var i=0;
+
+
+function get_random()
+{
+   	 var ranNum= Math.floor(Math.random()*10);
+   	 while(ranNum==0)
+   	         ranNum=Math.floor(Math.random()*10);
+   	 return ranNum;
+}
+
+
+
+function changecl()
+{
+	var node1=document.getElementById("c"+ran);
+	node1.style.backgroundColor="white";
+	ran = 0 ;
+}
+
+
+function changec()
+{
+	ran=get_random();
+	my[i]=ran;
+	i=i+1;
+	var node1=document.getElementById("c"+ran);
+	node1.style.backgroundColor="red";
+}
+
+
+var ran = 0 ;
+var c=0;
+var t;
+var timer_is_on=0;
+var k=0;
+var flag=0;
+var g=0;
+
+var cycle=5;
+
+var sec=500;
+
+function l1()
+{
+cycle=5;
+sec=500;
+}
+
+function l2()
+{
+cycle=6;
+sec=300;
+}
+
+function l3()
+{
+cycle=8;
+sec=200;
+}
+
+function timedCount()
+{
+	
+	
+	if (ran == 0)
+	{
+		changec() ;
+		c=c+1;
+		t=setTimeout(timedCount,sec);
+	}
+	else
+	{
+		
+		changecl () ;
+		if(c<cycle)
+		{
+			t=setTimeout(timedCount,sec);
+		}
+		else
+		{
+			c = 0 ;flag=1;alert("NOW ITS YOUR TURN!");k=0;i=0;
+		}
+		
+	}
+
+}
+
+
+
+var arrr=new Array();
+
+
+function clic(a)
+{
+if(flag==1)
+	{
+	arrr[k]=a;
+	k=k+1;
+	var node1=document.getElementById("c"+a);
+	node1.style.backgroundColor="red";
+	t=setTimeout(function (){clic1 (a)},sec);
+	}
+
+}
+
+
+function clic1(a)
+{
+var node1=document.getElementById("c"+a);
+node1.style.backgroundColor="white";
+
+if(my[g] != a)
+	{
+		alert("Game over");
+		flag=0;
+		i=0;
+		var node2=document.getElementById("play1");
+		node2.disabled=false;
+		g=0;
+		}
+else
+	g=g+1;
+
+if(g==cycle)
+	{alert("you have won!");g=0;
+		flag=0;
+		var node2=document.getElementById("play1");
+		node2.disabled=false;
+
+	}
+
+
+}
+
+
+function inst()
+{
+
+document.getElementById("front").style.display="none";
+document.getElementById("divPlay").style.display="none";
+document.getElementById("mainmenu").style.display="block";
+document.getElementById("instblock").style.display="block";
+document.getElementById("settingbut").style.display="none";
+}
+
+
+function setting()
+{
+document.getElementById("front").style.display="none";
+document.getElementById("divPlay").style.display="none";
+document.getElementById("divSetting").style.display="block";
+document.getElementById("mainmenu").style.display="block";
+document.getElementById("settingbut").style.display="none";
+document.getElementById("instblock").style.display="none";
+}
+
+function mainmenu()
+{
+document.getElementById("front").style.display="block";
+document.getElementById("divPlay").style.display="none";
+document.getElementById("divSetting").style.display="none";
+document.getElementById("mainmenu").style.display="none";
+document.getElementById("settingbut").style.display="block";
+document.getElementById("instblock").style.display="none";
+}	
+
+
+
+
+</script>
+</head>
+<body onload="javascript:inst();">
+
+
+<div id="front" style="color:#00FFF0">
+
+<INPUT TYPE="button" value="   Play   " onClick="displayt();">
+
+<br/>
+<INPUT TYPE="button" value="  Instructions  " onClick="inst();">
+
+</div>
+
+
+
+<div id="divPlay" style="display:'none'">
+
+<table border="1" id="myTable">
+<tr>
+<td id="c1" onClick="clic(1) ;">1</td>
+<td id="c2" onClick="clic(2) ;">2</td>
+<td id="c3" onClick="clic(3) ;">3</td>
+</tr>
+<tr>
+<td id="c4" onClick="clic(4) ;">4</td>
+<td id="c5" onClick="clic(5) ;">5</td>
+<td id="c6" onClick="clic(6) ;">6</td>
+</tr>
+<tr>
+<td id="c7" onClick="clic(7) ;">7</td>
+<td id="c8" onClick="clic(8) ;">8</td>
+<td id="c9" onClick="clic(9) ;">9</td>
+</tr>
+
+</table>
+<br/>
+
+<INPUT id="play1" TYPE="button" value="   Play   " onClick="this.disabled=true;timedCount() ;">
+
+</div>
+
+
+<div id="instblock" style="display:'none'">
+<p>
+Instructions<br/>
+1.Click on play button to play the game<br/>
+2.Numbers will be selected randomly<br/>
+3.Player has to remember the sequence<br/>
+4.Click the number in the same order as displayed<br/>
+</p>
+
+</div>
+
+
+<div id="mainmenu" style="display:'none'">
+<INPUT TYPE="button" value=" Main menu " onClick="mainmenu() ;">
+</div>
+
+
+<div id="settingbut" style="display:'block'">
+<INPUT TYPE="button" value=" Settings " onClick="setting();">
+</div>
+
+
+<div id="divSetting" style="display:'none'">
+<p>SETTINGS</p>
+
+<form>
+<input type="radio"  name="level" onClick="l1();" value="EASY">EASY<br />
+<input type="radio"  name="level" onClick="l2();" value="MEDIUM">MEDIUM<br />
+<input type="radio"  name="level" onClick="l3();" value="HARD">HARD<br />
+<br />
+</form>
+</div>
+
+</body>
+</html>
